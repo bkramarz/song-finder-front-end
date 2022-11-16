@@ -35,11 +35,8 @@ function App() {
       makeApiCall(genreListEndpoint, setListOfGenres);
       // makeApiCall(feelsListEndpoint, setListOfFeels);
     } else if (chosenGenres.length > 0) {
-      makeApiCall(feelsByGenreEndpoint + chosenGenres, setListOfFeels)
-    } 
-    // if (chosenFeels.length > 0) {
-    //   makeApiCall(genresByFeelEndpoint + chosenFeels, setListOfGenres)
-    // }
+      makeApiCall(feelsByGenreEndpoint + chosenGenres, setListOfFeels);
+    }
   }, [chosenGenres, chosenFeels]);
 
   function fetchSongListFromBackEnd() {
@@ -54,19 +51,14 @@ function App() {
       makeApiCall(songsByGenreEndpoint + chosenGenres, setSongList);
     } else if (chosenGenres.length === 0 && chosenFeels.length > 0) {
       // If user has only selected feels, return list of all songs in chosen feels
-      makeApiCall(songsByFeelEndpoint + chosenFeels, setSongList);
+      setChosenFeels([])
+      setSongList([])
+      // makeApiCall(songsByFeelEndpoint + chosenFeels, setSongList);
       // If user has not selected anything, set array to empty
     } else {
       setSongList([]);
     }
   }
-
-  const chosenListStyle = {
-    // display: "inline-block",
-    paddingLeft: 10,
-    paddingRight: 10,
-    fontSize: 20,
-  };
 
   const addGenre = (item) => {
     if (chosenGenres.includes(item)) {
@@ -97,30 +89,44 @@ function App() {
     }
     console.log("chosen feels:" + chosenFeels);
     fetchSongListFromBackEnd();
-    // makeApiCall(genresByFeelEndpoint + chosenFeels, setListOfGenres);
+  };
+
+  const chosenListStyle = {
+    display: "inline-block",
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 20,
   };
 
   return (
     <div className="App">
+      <h1>What kind of song do you want to sing?</h1>
+      <br />
       <ChoiceButtonArray
         key="genre"
         arr={listOfGenres}
         title="genre(s)"
         addItem={addGenre}
-      /> {chosenGenres.length > 0 ?
-      <ChoiceButtonArray
-        key="feel"
-        arr={listOfFeels}
-        title="feel(s)"
-        addItem={addFeel}
-      /> : null }
+      />{" "}
+      {chosenGenres.length > 0 ? (
+        <ChoiceButtonArray
+          key="feel"
+          arr={listOfFeels}
+          title="feel(s)"
+          addItem={addFeel}
+        />
+      ) : null}
       <h2 style={songList.length === 0 ? { visibility: "hidden" } : null}>
         Songs
       </h2>
       {songList.map((song, index) => {
         return (
           <p style={chosenListStyle} key={index}>
-            <b>{song["Song Title"]}</b> by {song["Recording Artist"]}
+            <b>
+              {/* <div style={{ width: 10, display: "inline-block" }}></div>{" "} */}
+              {song["Song Title"]}
+            </b>{" "}
+            by {song["Recording Artist"]}
           </p>
         );
       })}
