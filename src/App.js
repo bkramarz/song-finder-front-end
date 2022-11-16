@@ -33,11 +33,10 @@ function App() {
   useEffect(() => {
     if (chosenGenres.length === 0 && chosenFeels.length === 0) {
       makeApiCall(genreListEndpoint, setListOfGenres);
-      makeApiCall(feelsListEndpoint, setListOfFeels);
+      // makeApiCall(feelsListEndpoint, setListOfFeels);
+    } else if (chosenGenres.length > 0) {
+      makeApiCall(feelsByGenreEndpoint + chosenGenres, setListOfFeels)
     } 
-    // if (chosenGenres.length > 0) {
-    //   makeApiCall(feelsByGenreEndpoint + chosenGenres, setListOfFeels)
-    // } 
     // if (chosenFeels.length > 0) {
     //   makeApiCall(genresByFeelEndpoint + chosenFeels, setListOfGenres)
     // }
@@ -82,7 +81,7 @@ function App() {
     }
     console.log("chosen genres: " + chosenGenres);
     fetchSongListFromBackEnd();
-    makeApiCall(feelsByGenreEndpoint + chosenGenres, setListOfFeels);
+    // makeApiCall(feelsByGenreEndpoint + chosenGenres, setListOfFeels);
   };
 
   const addFeel = (item) => {
@@ -98,7 +97,7 @@ function App() {
     }
     console.log("chosen feels:" + chosenFeels);
     fetchSongListFromBackEnd();
-    makeApiCall(genresByFeelEndpoint + chosenFeels, setListOfGenres);
+    // makeApiCall(genresByFeelEndpoint + chosenFeels, setListOfGenres);
   };
 
   return (
@@ -108,13 +107,13 @@ function App() {
         arr={listOfGenres}
         title="genre(s)"
         addItem={addGenre}
-      />
+      /> {chosenGenres.length > 0 ?
       <ChoiceButtonArray
         key="feel"
         arr={listOfFeels}
         title="feel(s)"
         addItem={addFeel}
-      />
+      /> : null }
       <h2 style={songList.length === 0 ? { visibility: "hidden" } : null}>
         Songs
       </h2>
