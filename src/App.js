@@ -58,6 +58,7 @@ function App() {
     } else {
       setSongList([]);
     }
+    // console.log(songList)
   }
 
   const addGenre = (item) => {
@@ -92,7 +93,7 @@ function App() {
   };
 
   const chosenListStyle = {
-    display: "inline-block",
+    // display: "inline-block",
     paddingLeft: 10,
     paddingRight: 10,
     fontSize: 20,
@@ -124,9 +125,9 @@ function App() {
           <p style={chosenListStyle} key={index}>
             <b>
               {/* <div style={{ width: 10, display: "inline-block" }}></div>{" "} */}
-              {song["Song Title"]}
+              {song.title}
             </b>{" "}
-            by {song["Recording Artist"]}
+            by {song.recording_artist}
           </p>
         );
       })}
